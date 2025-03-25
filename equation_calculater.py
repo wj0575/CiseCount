@@ -1,6 +1,4 @@
 import math
-# 导入有理数类型
-import fractions
 
 from fraction import fraction, simplify_fraction, calculate_fraction
 from realness import calculate_realness
