@@ -51,3 +51,14 @@ def print_fraction(x):
         print(0)
     else:
         print(x[0], '/', x[1])
+
+def fraction_show(x, y):
+    """返回有理数的字符串形式"""
+    if y == 1:
+        return str(x)
+    if x == 0:
+        return str(0)
+    elif y % 2 == 0 and y % 5 == 0:
+        return str(x / y)
+    else:
+        return str(x) + '/' + str(y)

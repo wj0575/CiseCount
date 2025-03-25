@@ -29,24 +29,25 @@ def add_multiple_operators(text):
         result.append(i)
     return result
 
-def make_list(variables):
+def make_list(variables, fraction_enable):
     list = {}
     variables = variables.split(' ')
     for i in range(len(variables)):
         try:
             tmp = variables[i].split('=')
-            list[tmp[0]] = int(tmp[1])
+            list[tmp[0]] = tmp[1]
         finally:
             continue
     return list
 
 def equation_calculater(text, variables, fraction_enable=False):
-    list_of_variables = make_list(variables)
+    list_of_variables = make_list(variables, fraction_enable=fraction_enable)
     text = text.replace(' ', '')
     text = text.replace('**', '^')
     s = []
     stack_operator = []
     stack_num = []
+    print(text, list_of_variables)
     if fraction_enable:# 有理数（分数）模式
         for i in text:
             if i.isdigit() or i == '.':
@@ -66,6 +67,9 @@ def equation_calculater(text, variables, fraction_enable=False):
             elif s[i].isdigit():
                 s[i] = fraction_in(s[i])
         s = add_multiple_operators(s)
+        for i in s:
+            print(i, end=' ')
+        print("")
         for i in s:
             if isinstance(i, list):
                 stack_num.append(i)
@@ -94,7 +98,7 @@ def equation_calculater(text, variables, fraction_enable=False):
             operator = stack_operator.pop()
             stack_num.append(calculate_fraction(operator, num1, num2))
         result = simplify_fraction(stack_num[0])
-        return fraction(result[0], result[1])
+        return fraction_show(result[0], result[1])
     else:# 实数（小数）模式
         for i in text:
             if i.isdigit() or i == '.':
@@ -143,9 +147,9 @@ def equation_calculater(text, variables, fraction_enable=False):
 
 # 测试数据
 """
-equation = '2ab^c'
+equation = '2ab'
 
-list_variables = 'a=2 b=3 c=2'
+list_variables = 'a=2 b=3'
 
 print(equation_calculater(equation, list_variables, fraction_enable=True))
 print(equation_calculater(equation, list_variables, fraction_enable=False))"""

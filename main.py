@@ -47,7 +47,6 @@ def create_head(head_text):
 def equation_calculate():
     equation = equation_text.get()
     variables = variable_frame.get()
-    print(equation, variables)
     result = equation_calculater(equation, variables, fraction_enable=not realness_or_fraction)
     create_head(result)
 
