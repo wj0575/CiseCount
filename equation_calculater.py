@@ -1,7 +1,7 @@
 import math
 
 from fraction import fraction, simplify_fraction, calculate_fraction
-from realness import calculate_realness
+from realness import *
 from number_in import *
 
 priority_dict = {
@@ -29,7 +29,19 @@ def add_multiple_operators(text):
         result.append(i)
     return result
 
-def equation_calculater(text, list_of_variables, fraction_enable=False):
+def make_list(variables):
+    list = {}
+    variables = variables.split(' ')
+    for i in range(len(variables)):
+        try:
+            tmp = variables[i].split('=')
+            list[tmp[0]] = int(tmp[1])
+        finally:
+            continue
+    return list
+
+def equation_calculater(text, variables, fraction_enable=False):
+    list_of_variables = make_list(variables)
     text = text.replace(' ', '')
     text = text.replace('**', '^')
     s = []
@@ -53,9 +65,7 @@ def equation_calculater(text, list_of_variables, fraction_enable=False):
                 s[i] = fraction_in(s[i])
             elif s[i].isdigit():
                 s[i] = fraction_in(s[i])
-        print(s)
         s = add_multiple_operators(s)
-        print(s)
         for i in s:
             if isinstance(i, list):
                 stack_num.append(i)
@@ -83,8 +93,8 @@ def equation_calculater(text, list_of_variables, fraction_enable=False):
             num1 = stack_num.pop()
             operator = stack_operator.pop()
             stack_num.append(calculate_fraction(operator, num1, num2))
-        result = stack_num[0]
-        return result
+        result = simplify_fraction(stack_num[0])
+        return fraction(result[0], result[1])
     else:# 实数（小数）模式
         for i in text:
             if i.isdigit() or i == '.':
@@ -103,9 +113,7 @@ def equation_calculater(text, list_of_variables, fraction_enable=False):
                 s[i] = realness_in(s[i])
             elif s[i].isdigit():
                 s[i] = realness_in(s[i])
-        print(s)
         s = add_multiple_operators(s)
-        print(s)
         for i in s:
             if i == '(':
                 stack_operator.append(i)
@@ -134,7 +142,10 @@ def equation_calculater(text, list_of_variables, fraction_enable=False):
         return result
 
 # 测试数据
-equation = '2ab(a+b+0.5)a^2'
-list_of_variables = {'a': 1.5, 'b': 1/2}
-print(equation_calculater(equation, list_of_variables, fraction_enable=True))
-print(equation_calculater(equation, list_of_variables, fraction_enable=False))
+"""
+equation = '2ab^c'
+
+list_variables = 'a=2 b=3 c=2'
+
+print(equation_calculater(equation, list_variables, fraction_enable=True))
+print(equation_calculater(equation, list_variables, fraction_enable=False))"""
