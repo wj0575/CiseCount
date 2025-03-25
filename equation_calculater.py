@@ -15,13 +15,14 @@ def priority(operator1, operator2):
     return priority_dict[operator1] - priority_dict[operator2]
 
 def add_multiple_operators(text):
+    """加入表达式中省略的乘号"""
     result = []
     for index, i in enumerate(text):
         if i not in ['+', '-', '*', '/', '^', '(', ')'] and len(result) > 0:
             if not text[index - 1] in ['+', '-', '*', '/', '^', '(', ')']:
                 result.append('*')
         if i == '(':
-            if not text[index - 1] in ['+', '-', '*', '/', '^', '(', ')']:
+            if index > 0 and not text[index - 1] in ['+', '-', '*', '/', '^', '(', ')']:
                 result.append('*')
         if i not in ['+', '-', '*', '/', '^', '(', ')']:
             if text[index - 1] == ')':
@@ -30,6 +31,7 @@ def add_multiple_operators(text):
     return result
 
 def make_list(variables, fraction_enable):
+    """将变量列表转换为字典"""
     list = {}
     variables = variables.split(' ')
     for i in range(len(variables)):
