@@ -1,5 +1,4 @@
 import math
-
 from fraction import fraction, simplify_fraction, calculate_fraction
 from realness import *
 from number_in import *
@@ -18,11 +17,13 @@ def add_multiple_operators(text):
     """加入表达式中省略的乘号"""
     result = []
     for index, i in enumerate(text):
+        if index == 0:
+            continue
         if i not in ['+', '-', '*', '/', '^', '(', ')'] and len(result) > 0:
             if not text[index - 1] in ['+', '-', '*', '/', '^', '(', ')']:
                 result.append('*')
         if i == '(':
-            if index > 0 and not text[index - 1] in ['+', '-', '*', '/', '^', '(', ')']:
+            if not text[index - 1] in ['+', '-', '*', '/', '^', '(', ')']:
                 result.append('*')
         if i not in ['+', '-', '*', '/', '^', '(', ')']:
             if text[index - 1] == ')':

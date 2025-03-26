@@ -7,25 +7,7 @@ except AttributeError:
     pass
 
 from equation_calculater import *
-color_light_green = "#CCFFF6"
-color_light_blue = "#CCE6FF"
-color_light_purple = "#E6CCFF"
-color_light_orange = "#FFE6CC"
-color_light_pink = "#FFCCE6"
-color_light_brown = "#FFCCCC"
-color_white = "#AAAAAA"
-color_black = "#000000"
-color_grey = "#808080"
-color_red = "#FF0000"
-color_green = "#00FF00"
-color_blue = "#0000FF"
-color_yellow = "#FFFF00"
-color_purple = "#800080"
-color_orange = "#905050"
-color_pink = "#FFC0CB"
-color_brown = "#A52A2A"
-color_cyan = "#00FFFF"
-color_dark_blue = "#3C333C"
+from color_blank import *
 
 root = tk.Tk()
 root.configure(bg=color_dark_blue)
@@ -41,7 +23,7 @@ def create_head(head_text):
         head_label.config(text=head_text)
     else:
         # 如果 Label 组件不存在，创建新的 Label 组件
-        head_label = tk.Label(root, text=head_text, bg=color_orange, font=('黑体', 18))
+        head_label = tk.Label(root, text=head_text, bg=color_orange, font=('黑体', 20))
         head_label.place(relx=0.82, rely=0.3, relwidth=0.31, relheight=0.08, anchor="center")
 
 def equation_calculate():
@@ -55,7 +37,7 @@ def equation_calculate():
 # 点击计算按钮
 def calculate_button():
     equation_calculate()
-calculate_button = tk.Button(root, text="计算", bg=color_light_blue, command=calculate_button, font=("黑体", 16))
+calculate_button = tk.Button(root, text="计算", bg=color_light_blue, command=calculate_button, font=("黑体", 20))
 calculate_button.place(relx=0.5, rely=0.3, relwidth=0.2, relheight=0.08, anchor="center")
 
 
@@ -88,7 +70,7 @@ search_link_fuzzy_button = tk.Button(equation_frame, text="有理数", bg=color_
 search_link_fuzzy_button.place(relx=0.93, rely=0.75, relwidth=0.09, relheight=0.4, anchor="center")
 
 
-create_head("答案在这里")
+create_head("结果在这里")
 root.mainloop()
 
 # 一直循环，直到用户关闭窗口
