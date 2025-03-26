@@ -2,6 +2,7 @@ import math
 from fraction import fraction, simplify_fraction, calculate_fraction
 from realness import *
 from number_in import *
+from variable_list import *
 
 priority_dict = {
     '^': 4,
@@ -32,19 +33,10 @@ def add_multiple_operators(text):
         result.append(i)
     return result
 
-def make_list(variables, fraction_enable):
-    """将变量列表转换为字典"""
-    list = {}
-    variables = variables.split(' ')
-    for i in range(len(variables)):
-        try:
-            tmp = variables[i].split('=')
-            list[tmp[0]] = tmp[1]
-        finally:
-            continue
-    return list
 
 def equation_calculater(text, variables, fraction_enable=False):
+    if not text:
+        return "#表达式为空#"
     list_of_variables = make_list(variables, fraction_enable=fraction_enable)
     text = text.replace(' ', '')
     text = text.replace('**', '^')
@@ -111,6 +103,7 @@ def equation_calculater(text, variables, fraction_enable=False):
                 return num
             stack_num.append(num)
         result = simplify_fraction(stack_num[0])
+        print("/n/n", result, "/n/n")
         return fraction_show(result[0], result[1])
     else:# 实数（小数）模式
         for i in text:

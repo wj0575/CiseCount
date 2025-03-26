@@ -14,17 +14,34 @@ root.configure(bg=color_dark_blue)
 root.title("CiseCount 计算器")
 root.geometry("1440x810")
 
+# 显示提示信息的地方
+info_label = tk.Label(root, text="请输入表达式和变量", bg=color_dark_blue, fg=color_white, font=("黑体", 20))
+info_label.place(relx=0.5, rely=0.1, relwidth=0.35, relheight=0.08, anchor="center")
+
+info_label = None
+def create_note(text):
+    global info_label
+    if info_label:
+        # 如果 Label 组件已经存在，更新其文本内容
+        info_label.config(text=text)
+    else:
+        # 如果 Label 组件不存在，创建新的 Label 组件
+        # 定位在右下角
+        info_label = tk.Label(root, text=text, bg=color_dark_blue, fg=color_white, font=("黑体", 10))
+        info_label.place(relx=0.5, rely=0.97, relwidth=1, relheight=0.04, anchor="center")
+
+
 # 显示答案的地方
 head_label = None
 def create_head(head_text, color=color_black):
     global head_label
     if head_label:
         # 如果 Label 组件已经存在，更新其文本内容
-        head_label.config(text=head_text)
+        head_label.config(text=head_text, fg=color)
     else:
         # 如果 Label 组件不存在，创建新的 Label 组件
         head_label = tk.Label(root, text=head_text, bg=color_orange, fg=color, font=('黑体', 20))
-        head_label.place(relx=0.82, rely=0.3, relwidth=0.31, relheight=0.08, anchor="center")
+        head_label.place(relx=0.8, rely=0.28, relwidth=0.35, relheight=0.08, anchor="center")
 
 def equation_calculate():
     equation = equation_text.get()
@@ -42,11 +59,11 @@ def equation_calculate():
 def calculate_button():
     equation_calculate()
 calculate_button = tk.Button(root, text="计算", bg=color_light_blue, command=calculate_button, font=("黑体", 20))
-calculate_button.place(relx=0.5, rely=0.3, relwidth=0.2, relheight=0.08, anchor="center")
+calculate_button.place(relx=0.5, rely=0.28, relwidth=0.2, relheight=0.08, anchor="center")
 
 
 equation_frame = tk.Frame(root, bg=color_grey)
-equation_frame.place(relx=0.5, rely=0.14, relwidth=0.95, relheight=0.15, anchor="center")
+equation_frame.place(relx=0.5, rely=0.13, relwidth=0.95, relheight=0.15, anchor="center")
 # 在equation_frame中添加一个输入文本框
 equation_text = tk.Entry(equation_frame, bg=color_white, fg=color_black, font=("Arial", 20))
 equation_text.place(relx=0.5, rely=0.25, relwidth=0.95, relheight=0.4, anchor="center")
@@ -63,10 +80,12 @@ realness_or_fraction = False  # 初始状态为fraction有理数模式
 def calculate_mode_button():
     global realness_or_fraction
     if realness_or_fraction:
+        create_note("有理数模式 结果精确 不能开分数次方")
         search_link_fuzzy_button.config(bg=color_light_pink, text="有理数")
         realness_or_fraction = False
     else:
-        search_link_fuzzy_button.config(bg=color_light_blue, text="浮点数")
+        create_note("浮点数模式 内嵌常见常数 有位数限制 注意浮点误差")
+        search_link_fuzzy_button.config(bg=color_light_purple, text="浮点数")
         realness_or_fraction = True
 
 search_link_fuzzy_button = tk.Button(equation_frame, text="有理数", bg=color_light_pink,
@@ -75,6 +94,7 @@ search_link_fuzzy_button.place(relx=0.93, rely=0.75, relwidth=0.09, relheight=0.
 
 
 create_head("结果在这里")
+create_note("CiseCount Calculator https://github.com/wj0575/CiseCount by wj0575 2025.3")
 root.mainloop()
 
 # 一直循环，直到用户关闭窗口

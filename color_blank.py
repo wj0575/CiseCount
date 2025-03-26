@@ -1,6 +1,6 @@
 color_light_green = "#CCFFF6"
 color_light_blue = "#CCE6FF"
-color_light_purple = "#E6CCFF"
+color_light_purple = "#CE98FF"
 color_light_orange = "#FFE6CC"
 color_light_pink = "#FFCCE6"
 color_light_brown = "#FFCCCC"

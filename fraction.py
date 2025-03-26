@@ -24,6 +24,10 @@ def simplify_fraction(x):
     return [x[0] // gcd, x[1] // gcd]
 
 def calculate_fraction(operator, x, y):
+    # 如果x y 中有字符出现，返回错误
+    if not isinstance(x, list) or not isinstance(y, list):
+        print("variable error")
+        return "#变量未定义#"
     if operator == '+':
         return simplify_fraction([x[0] * y[1] + y[0] * x[1], x[1] * y[1]])
     elif operator == '-':
@@ -59,7 +63,7 @@ def fraction_show(x, y):
         return str(x)
     if x == 0:
         return str(0)
-    elif y % 2 == 0 and y % 5 == 0:
-        return str(x / y)
+    elif len(str(x/y)) < 8:
+        return str(x) + '/' + str(y) + ' ( ' + str(round(x/y, 5)) + ' )'
     else:
         return str(x) + '/' + str(y)
