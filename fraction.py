@@ -42,7 +42,7 @@ def calculate_fraction(operator, x, y):
     elif operator == '^':
         if y[1] != 1:
             print("under fraction mode, the index must be integer")
-            return "#有理数内不能开分数次方#"
+            return "#有理数域内不能开分数次方#"
         return simplify_fraction([x[0] ** y[0], x[1] ** y[0]])
     else:
         print("operator symbol error")
