@@ -18,6 +18,7 @@ def add_multiple_operators(text):
     result = []
     for index, i in enumerate(text):
         if index == 0:
+            result.append(i)
             continue
         if i not in ['+', '-', '*', '/', '^', '(', ')'] and len(result) > 0:
             if not text[index - 1] in ['+', '-', '*', '/', '^', '(', ')']:
@@ -84,14 +85,20 @@ def equation_calculater(text, variables, fraction_enable=False):
                     num2 = stack_num.pop()
                     num1 = stack_num.pop()
                     operator = stack_operator.pop()
-                    stack_num.append(calculate_fraction(operator, num1, num2))
+                    num = calculate_fraction(operator, num1, num2)
+                    if "#" in str(num):
+                        return num
+                    stack_num.append(num)
                 stack_operator.pop()
             elif i in ['+', '-', '*', '/', '^']:
                 while stack_operator and stack_operator[-1] != '(' and priority(stack_operator[-1], i) > 0:
                     num2 = stack_num.pop()
                     num1 = stack_num.pop()
                     operator = stack_operator.pop()
-                    stack_num.append(calculate_fraction(operator, num1, num2))
+                    num = calculate_fraction(operator, num1, num2)
+                    if "#" in str(num):
+                        return num
+                    stack_num.append(num)
                 stack_operator.append(i)
             else:
                 stack_num.append(i)
@@ -99,7 +106,10 @@ def equation_calculater(text, variables, fraction_enable=False):
             num2 = stack_num.pop()
             num1 = stack_num.pop()
             operator = stack_operator.pop()
-            stack_num.append(calculate_fraction(operator, num1, num2))
+            num = calculate_fraction(operator, num1, num2)
+            if "#" in str(num):
+                return num
+            stack_num.append(num)
         result = simplify_fraction(stack_num[0])
         return fraction_show(result[0], result[1])
     else:# 实数（小数）模式
@@ -129,14 +139,20 @@ def equation_calculater(text, variables, fraction_enable=False):
                     num2 = stack_num.pop()
                     num1 = stack_num.pop()
                     operator = stack_operator.pop()
-                    stack_num.append(calculate_realness(operator, num1, num2))
+                    num = calculate_realness(operator, num1, num2)
+                    if "#" in str(num):
+                        return num
+                    stack_num.append(num)
                 stack_operator.pop()
             elif i in ['+', '-', '*', '/', '^']:
                 while stack_operator and stack_operator[-1] != '(' and priority(stack_operator[-1], i) > 0:
                     num2 = stack_num.pop()
                     num1 = stack_num.pop()
                     operator = stack_operator.pop()
-                    stack_num.append(calculate_realness(operator, num1, num2))
+                    num = calculate_realness(operator, num1, num2)
+                    if "#" in str(num):
+                        return num
+                    stack_num.append(num)
                 stack_operator.append(i)
             else:
                 stack_num.append(i)
@@ -144,7 +160,10 @@ def equation_calculater(text, variables, fraction_enable=False):
             num2 = stack_num.pop()
             num1 = stack_num.pop()
             operator = stack_operator.pop()
-            stack_num.append(calculate_realness(operator, num1, num2))
+            num = calculate_realness(operator, num1, num2)
+            if "#" in str(num):
+                return num
+            stack_num.append(num)
         result = stack_num[0]
         return result
 
