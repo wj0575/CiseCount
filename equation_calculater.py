@@ -43,7 +43,6 @@ def equation_calculater(text, variables, fraction_enable=False):
     s = []
     stack_operator = []
     stack_num = []
-    print(text, list_of_variables)
     if fraction_enable:# 有理数（分数）模式
         for i in text:
             if i.isdigit() or i == '.':
@@ -53,8 +52,10 @@ def equation_calculater(text, variables, fraction_enable=False):
                     s.append(i)
             elif i in list_of_variables:
                 s.append(str(list_of_variables[i]))
-            else:
+            elif i in ['(', ')', '+', '-', '*', '/', '^']:
                 s.append(i)
+            else:
+                return "#变量未定义#"
         for i in range(len(s)):
             if '/' in s[i] and len(s[i]) > 1:
                 s[i] = fraction_in(s[i])
@@ -103,7 +104,6 @@ def equation_calculater(text, variables, fraction_enable=False):
                 return num
             stack_num.append(num)
         result = simplify_fraction(stack_num[0])
-        print("/n/n", result, "/n/n")
         return fraction_show(result[0], result[1])
     else:# 实数（小数）模式
         for i in text:
@@ -114,8 +114,10 @@ def equation_calculater(text, variables, fraction_enable=False):
                     s.append(i)
             elif i in list_of_variables:
                 s.append(str(list_of_variables[i]))
-            else:
+            elif i in ['(', ')', '+', '-', '*', '/', '^']:
                 s.append(i)
+            else:
+                return "#变量未定义#"
         for i in range(len(s)):
             if '/' in s[i] and len(s[i]) > 1:
                 s[i] = realness_in(s[i])
@@ -124,6 +126,9 @@ def equation_calculater(text, variables, fraction_enable=False):
             elif s[i].isdigit():
                 s[i] = realness_in(s[i])
         s = add_multiple_operators(s)
+        for i in s:
+            print(i, end=' ')
+        print("")
         for i in s:
             if i == '(':
                 stack_operator.append(i)
