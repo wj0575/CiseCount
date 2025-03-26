@@ -33,15 +33,16 @@ def calculate_fraction(operator, x, y):
     elif operator == '/':
         if y[0] == 0:
             print("divisor can't be 0")
-            return [0, 1]
+            return "#除数不能为零#"
         return simplify_fraction([x[0] * y[1], x[1] * y[0]])
     elif operator == '^':
         if y[1] != 1:
             print("under fraction mode, the index must be integer")
-            return [0, 1]
+            return "#有理数内不能开分数次方#"
         return simplify_fraction([x[0] ** y[0], x[1] ** y[0]])
     else:
         print("operator symbol error")
+        return "#运算符错误#"
 
 def print_fraction(x):
     """打印有理数"""
