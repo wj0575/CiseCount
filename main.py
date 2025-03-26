@@ -77,6 +77,16 @@ equation_inform.place(relx=0.73, rely=0.75, relwidth=0.29, relheight=0.4, anchor
 # 在equation_frame中添加一个按钮，用于切换计算模式
 realness_or_fraction = False  # 初始状态为fraction有理数模式
 
+tmp_text = {}
+for i in range(10):
+    if i%2 == 0:
+        color = color_dark_grey
+    else:
+        color = color_grey
+    tmp_text[i] = tk.Entry(root, bg=color, fg=color_black, font=("Arial", 11))
+    tmp_text[i].place(relx=0.8, rely=0.4+0.04*i, relwidth=0.35, relheight=0.04, anchor="center")
+
+
 def calculate_mode_button():
     global realness_or_fraction
     if realness_or_fraction:
