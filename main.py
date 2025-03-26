@@ -16,21 +16,25 @@ root.geometry("1440x810")
 
 # 显示答案的地方
 head_label = None
-def create_head(head_text):
+def create_head(head_text, color=color_black):
     global head_label
     if head_label:
         # 如果 Label 组件已经存在，更新其文本内容
         head_label.config(text=head_text)
     else:
         # 如果 Label 组件不存在，创建新的 Label 组件
-        head_label = tk.Label(root, text=head_text, bg=color_orange, font=('黑体', 20))
+        head_label = tk.Label(root, text=head_text, bg=color_orange, fg=color, font=('黑体', 20))
         head_label.place(relx=0.82, rely=0.3, relwidth=0.31, relheight=0.08, anchor="center")
 
 def equation_calculate():
     equation = equation_text.get()
     variables = variable_frame.get()
     result = equation_calculater(equation, variables, fraction_enable=not realness_or_fraction)
-    create_head(result)
+    if "#" in str(result):
+        result = result.replace("#", "")
+        create_head(result, color=color_red)
+    else:
+        create_head(result)
 
 
 
